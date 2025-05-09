@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sürpriz Başlıyor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 20%;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    #countdown {
+      font-size: 2em;
+      font-weight: bold;
+    }
+  </style>
+  <script>
+    const targetDate = new Date("2025-05-09T20:00:00+03:00").getTime(); // Change this as needed
+    const spotifyLink = "https://open.spotify.com/show/YOUR_SPOTIFY_LINK";
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance <= 0) {
+        window.location.href = spotifyLink;
+      } else {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        document.getElementById("countdown").innerHTML = 
+          days + "g " + hours + "s " + minutes + "dk " + seconds + "sn";
+      }
+    }
+
+    setInterval(updateCountdown, 1000);
+    window.onload = updateCountdown;
+  </script>
+</head>
+<body>
+  <h1>Sürprize kalan süre:</h1>
+  <div id="countdown">Yükleniyor...</div>
+</body>
+</html>
