@@ -3,47 +3,85 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sürpriz Başlıyor</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff;
       text-align: center;
-      margin-top: 20%;
-      background-color: #f9f9f9;
+      padding-top: 100px;
       color: #333;
     }
     #countdown {
-      font-size: 2em;
+      font-size: 80px;
       font-weight: bold;
+      margin: 50px 0;
+    }
+    #question, #buttons {
+      display: none;
+    }
+    h1 {
+      font-size: 36px;
+    }
+    h2 {
+      font-size: 28px;
+    }
+    button {
+      padding: 14px 28px;
+      font-size: 20px;
+      margin: 15px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      background-color: #4CAF50;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #btn-no {
+      background-color: #f44336;
+    }
+    #btn-no:hover {
+      background-color: #da190b;
     }
   </style>
+</head>
+<body>
+  <h1>Sürprize kalan süre:</h1>
+  <div id="countdown">Yükleniyor...</div>
+
+  <div id="question">
+    <h2>Beni seviyor musun?</h2>
+  </div>
+  <div id="buttons">
+    <button onclick="location.href='https://open.spotify.com/episode/5JvCdw8XyzexucLi9el3dq?si=_Nlb8_Y6T5Cs7UsaESjpyQ'">Evet</button>
+    <button id="btn-no" onclick="alert('Hmm... Cevabını sonra tekrar soracağım :)')">Hayır</button>
+  </div>
+
   <script>
-    const targetDate = new Date("2025-05-09T20:00:00+03:00").getTime(); // Change this as needed
-    const spotifyLink = "https://open.spotify.com/show/YOUR_SPOTIFY_LINK";
+    const targetDate = new Date("2025-05-10T00:00:00+03:00").getTime();
 
     function updateCountdown() {
       const now = new Date().getTime();
       const distance = targetDate - now;
 
       if (distance <= 0) {
-        window.location.href = spotifyLink;
+        document.getElementById("countdown").style.display = "none";
+        document.getElementById("question").style.display = "block";
+        document.getElementById("buttons").style.display = "block";
+        clearInterval(timer);
       } else {
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        document.getElementById("countdown").innerHTML = 
-          days + "g " + hours + "s " + minutes + "dk " + seconds + "sn";
+        const hours = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+        const minutes = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+        const seconds = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
+        document.getElementById("countdown").innerHTML = hours + ":" + minutes + ":" + seconds;
       }
     }
 
-    setInterval(updateCountdown, 1000);
-    window.onload = updateCountdown;
+    const timer = setInterval(updateCountdown, 1000);
+    updateCountdown();
   </script>
-</head>
-<body>
-  <h1>Sürprize kalan süre:</h1>
-  <div id="countdown">Yükleniyor...</div>
 </body>
 </html>
